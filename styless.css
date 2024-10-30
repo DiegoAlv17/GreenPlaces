@@ -1,3 +1,39 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mostrar {
+  from {
+    opacity: 0;
+    scale: 30%;
+  }
+  to {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 75%;
+  }
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -22,7 +58,7 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #f4f4f4;
+  background-color: #f0ffee;
   margin: 0;
   padding: 0;
 }
@@ -83,7 +119,7 @@ header nav ul li a:hover::after {
   flex-direction: column;
 }
 .home h1 {
-  color: #f4f4f4;
+  color: #f0ffee;
   font-size: 4.6rem;
   animation: fadeInUp 1s ease-out;
   margin-bottom: 1rem;
@@ -94,7 +130,7 @@ header nav ul li a:hover::after {
   }
 }
 .home p {
-  color: #f4f4f4;
+  color: #f0ffee;
   font-size: 1.6rem;
   animation: fadeInUp 1s ease-out 0.3s;
   animation-fill-mode: both;
@@ -158,6 +194,7 @@ main section h2 {
 .about-grid .about-img img {
   width: 100%;
   height: auto;
+  transition-duration: 0.6s;
 }
 .about-grid .about-img img:hover {
   transform: scale(1.02);
@@ -178,9 +215,11 @@ main section h2 {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  transition-duration: 0.4s;
+  transition-delay: 0.3s;
 }
 .product-grid .product:hover {
-  transform: translateY(-10px);
+  transform: translateY(20px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 .product-grid .product img {
@@ -195,12 +234,12 @@ main section h2 {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(76, 175, 80, 0.8);
+  background-color: rgba(18, 99, 18, 0.8);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #f4f4f4;
+  color: #f0ffee;
   font-size: 14px;
   padding: 10px;
   text-align: center;
@@ -211,14 +250,79 @@ main section h2 {
   transform: translateY(0);
 }
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.eco-tips-container {
+  max-width: 1200px;
+  padding: 2rem;
+  view-timeline: --eco block;
 }
+.eco-tips-container .section-header,
+.eco-tips-container h1 {
+  font-size: 35px;
+  background: #4caf50;
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  animation-name: fadeInLeft;
+  animation-timeline: --eco;
+  animation-range: entry 1% cover 20%;
+  animation-fill-mode: both;
+}
+.eco-tips-container .tips-category {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  view-timeline: --eco block;
+  animation-name: mostrar;
+  animation-timeline: --eco;
+  animation-range: entry 10% cover 50%;
+  animation-fill-mode: both;
+}
+.eco-tips-container .tips-category .category-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+.eco-tips-container .tips-category .tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.eco-tips-container .tips-category .tips-grid .tip-card {
+  background: #f9f9f9;
+  border-left: 4px solid #4CAF50;
+  padding: 1.5rem;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+.eco-tips-container .tips-category .tips-grid .tip-card:hover {
+  transform: translateY(-5px);
+}
+
+.progress-tracker {
+  padding: 2rem;
+  background: #f5f5f5;
+}
+.progress-tracker .progress-bar {
+  background: #ddd;
+  height: 20px;
+  border-radius: 10px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+.progress-tracker .progress-bar .progress-fill {
+  background: #4CAF50;
+  height: 100%;
+  width: 75%;
+  animation: progress 1s ease-in-out forwards paused;
+}
+
+.progress-tracker:hover .progress-fill {
+  animation-play-state: running;
+}
+
 form {
   display: flex;
   flex-direction: column;

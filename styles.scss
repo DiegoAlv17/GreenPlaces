@@ -1,17 +1,64 @@
 // Variables
 $primary-color: #4caf50;
 $secondary-color: #4caf50;
+$filtro-color: rgb(18, 99, 18);
 $text-color: #333;
-$background-color: #f4f4f4;
+$background-color: #f0ffee;
 $title-size: 4.6rem;
 $title-size-small: 3.6rem;
 $paragraph-size: 1.6rem;
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mostrar {
+  from {
+    opacity: 0;
+    scale: 30%;
+  }
+
+  to {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 75%;
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -23,6 +70,7 @@ $paragraph-size: 1.6rem;
     transform: scale(0.95);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -36,6 +84,7 @@ $paragraph-size: 1.6rem;
   align-items: center;
 }
 
+
 @mixin fixed-top {
   position: fixed;
   top: 0;
@@ -48,6 +97,14 @@ $paragraph-size: 1.6rem;
   gap: 1rem;
   padding: 1rem;
 }
+
+@mixin fadeInPage($fade, $e, $c) {
+  animation-name: $fade;
+  animation-timeline: --eco;
+  animation-range: entry $e cover $c;
+  animation-fill-mode: both;
+}
+
 
 // Global Styles
 body {
@@ -115,8 +172,9 @@ header {
   height: 40vh;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("img/img_0415.jpg") no-repeat center/cover;
-    @include flex-center;
-    flex-direction: column;
+  @include flex-center;
+  flex-direction: column;
+
   h1 {
     color: $background-color;
     font-size: $title-size;
@@ -137,17 +195,21 @@ header {
 }
 
 main {
+
   margin-top: 4rem;
+
   section {
     padding: 2rem;
     text-align: center;
     z-index: 1;
     animation: scaleIn 0.8s ease-out;
+
     h1,
     h2 {
       color: $primary-color;
     }
   }
+
 }
 
 .about-grid {
@@ -162,6 +224,7 @@ main {
     padding: 1rem;
     position: relative;
     transition: transform 0.3s ease;
+
     &:hover {
       transform: translateY(-5px);
     }
@@ -190,6 +253,8 @@ main {
   .about-img img {
     width: 100%;
     height: auto;
+    transition-duration: .6s;
+
     &:hover {
       transform: scale(1.02);
     }
@@ -208,10 +273,14 @@ main {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    transition-duration: 0.4s;
+    transition-delay: .3s;
+
     &:hover {
-      transform: translateY(-10px);
+      transform: translateY(20px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
+
     img {
       width: 100%;
       height: 100%;
@@ -226,7 +295,7 @@ main {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba($primary-color, 0.8);
+    background-color: rgba($filtro-color, 0.8);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,15 +313,78 @@ main {
   }
 }
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0);
+.eco-tips-container {
+  max-width: 1200px;
+  padding: 2rem;
+  view-timeline: --eco block;
+
+  .section-header,
+  h1 {
+    font-size: 35px;
+    background: $primary-color;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    @include fadeInPage(fadeInLeft, 1%, 20%);
   }
 
-  100% {
-    transform: rotate(360deg);
+  .tips-category {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    view-timeline: --eco block;
+    @include fadeInPage(mostrar, 10%, 50%);
+
+    .category-icon {
+      font-size: 2rem;
+      margin-right: 1rem;
+    }
+
+    .tips-grid {
+      @include grid();
+
+      .tip-card {
+        background: #f9f9f9;
+        border-left: 4px solid #4CAF50;
+        padding: 1.5rem;
+        border-radius: 4px;
+        transition: transform 0.3s ease;
+      }
+
+      .tip-card:hover {
+        transform: translateY(-5px);
+      }
+    }
   }
 }
+
+.progress-tracker {
+  padding: 2rem;
+  background: #f5f5f5;
+
+  .progress-bar {
+    background: #ddd;
+    height: 20px;
+    border-radius: 10px;
+    margin: 1rem 0;
+    overflow: hidden;
+
+    .progress-fill {
+      background: #4CAF50;
+      height: 100%;
+      width: 75%;
+      animation: progress 1s ease-in-out forwards paused;
+      
+    }
+  }
+}
+.progress-tracker:hover .progress-fill {
+  animation-play-state: running;
+}
+
 
 form {
   display: flex;
@@ -333,6 +465,7 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem;
+
   p {
     margin: 0;
     padding: 0 1rem;
