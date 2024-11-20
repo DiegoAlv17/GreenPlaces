@@ -126,4 +126,4 @@ const Areas = () => {
 };
 
 export default Areas;
->>>>>>> lorena
+
