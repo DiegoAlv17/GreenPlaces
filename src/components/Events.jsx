@@ -1,32 +1,53 @@
 import { Calendar, MapPin, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Events = () => {
+  const [volunteers, setVolunteers] = useState({
+    oxapampa: 50,
+    lima: 100,
+    miraflores: 30,
+  });
+
   const events = [
     {
       title: "Reforestación en Oxapampa",
       date: "15 de Mayo, 2024",
       location: "Oxapampa, Pasco",
-      participants: "50 voluntarios",
+      participants: volunteers.oxapampa,
       imageUrl:
         "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80",
+      id: "oxapampa",
     },
     {
       title: "Limpieza de Playa Costa Verde",
       date: "22 de Mayo, 2024",
       location: "Lima",
-      participants: "100 voluntarios",
+      participants: volunteers.lima,
       imageUrl:
         "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?auto=format&fit=crop&q=80",
+      id: "lima",
     },
     {
       title: "Taller de Agricultura Urbana",
       date: "1 de Junio, 2024",
       location: "Miraflores, Lima",
-      participants: "30 participantes",
+      participants: volunteers.miraflores,
       imageUrl:
         "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&q=80",
+      id: "miraflores",
     },
   ];
+
+  const handleInscription = (location, participants) => {
+    setVolunteers({
+      ...volunteers,
+      [location]: participants + 1,
+    });
+  };
+
+  useEffect(() => {
+    setVolunteers(volunteers);
+  }, []);
 
   return (
     <section id="eventos" className="eventos py-16 bg-white">
@@ -69,11 +90,16 @@ const Events = () => {
                   </div>
                   <div className="mt-2 flex items-center text-gray-600">
                     <Users className="h-5 w-5 mr-2" />
-                    {event.participants}
+                    {event.participants} voluntarios
                   </div>
                 </div>
                 <div className="mt-6">
-                  <button className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-500 transition-colors">
+                  <button
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-500 transition-colors"
+                    onClick={() =>
+                      handleInscription(event.id, event.participants)
+                    }
+                  >
                     Inscribirse
                   </button>
                 </div>

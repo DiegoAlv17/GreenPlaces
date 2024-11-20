@@ -1,24 +1,29 @@
-import { BookOpen, Video, FileText } from "lucide-react";
+import { BookOpen, FileText, X, Youtube } from "lucide-react";
+import { useState } from "react";
 
 const Education = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState("");
+
   const content = [
     {
       title: "Biodiversidad Peruana",
-      type: "Artículo",
-      icon: <FileText className="h-6 w-6" />,
+      type: "Video",
+      icon: <Youtube className="h-6 w-6" />,
       description:
         "Descubre la rica diversidad de flora y fauna en nuestros ecosistemas.",
-      imageUrl:
-        "/img/biodiversidad.jpg",
+      imageUrl: "/img/biodiversidad.jpg",
+      readMore: "https://www.youtube.com/shorts/5myxtyIZrZA",
     },
     {
       title: "Técnicas de Reforestación",
       type: "Video",
-      icon: <Video className="h-6 w-6" />,
+      icon: <Youtube className="h-6 w-6" />,
       description:
         "Aprende métodos efectivos para reforestar áreas degradadas.",
       imageUrl:
         "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80",
+      readMore: "https://www.youtube.com/watch?v=UC1sHCo3ZBg",
     },
     {
       title: "Guía de Compostaje",
@@ -27,8 +32,20 @@ const Education = () => {
       description: "Manual paso a paso para crear tu propio compost en casa.",
       imageUrl:
         "https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?auto=format&fit=crop&q=80",
+      readMore:
+        "https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S1405-77432017000100031",
     },
   ];
+
+  const handleReadMore = (url) => {
+    setRedirectUrl(url);
+    setIsModalOpen(true);
+  };
+
+  const handleContinue = () => {
+    window.open(redirectUrl, "_blank");
+    setIsModalOpen(false);
+  };
 
   return (
     <section id="educacion" className="educacion py-16 bg-green-50">
@@ -73,18 +90,51 @@ const Education = () => {
                   </a>
                 </div>
                 <div className="mt-6">
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => handleReadMore(item.readMore)}
                     className="text-base font-semibold text-green-600 hover:text-green-500"
                   >
-                    Leer más →
-                  </a>
+                    Ver más →
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Alerta</h3>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <p className="mb-4">
+              Estas a punto de entrar a otro link. ¿Deseas continuar?
+            </p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleContinue}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
