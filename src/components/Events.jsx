@@ -73,7 +73,12 @@ const Events = () => {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <button className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-500 transition-colors">
+                  <button
+                    data-modal-target="authentication-modal"
+                    data-modal-toggle="authentication-modal"
+                    type="button"
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-500 transition-colors"
+                  >
                     Inscribirse
                   </button>
                 </div>

@@ -7,6 +7,8 @@ import Education from './components/Education.jsx'
 import Events from './components/Events.jsx'
 import Areas from './components/Areas.jsx'
 import Tips from './components/Tips.jsx'
+import Modal from './components/Modal.jsx'
+
 
 function App() {
 
@@ -18,6 +20,7 @@ function App() {
         <About />
         <Education />
         <Events />
+        <Modal />
         <Areas />
         <Tips />
       </main>

@@ -1,12 +1,14 @@
+const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
-  theme: {
-    extend: {
-      animation: {
-        "spin-slow": "spin 3s linear infinite",
-      },
+export const content = ["./src/**/*.{html,js,jsx,ts,tsx}",flowbite.content()];
+export const theme = {
+  extend: {
+    
+    animation: {
+      "spin-slow": "spin 3s linear infinite",
     },
   },
-  plugins: [],
 };
+export const plugins = [
+    flowbite.plugin(),
+];
