@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-item {
+  @apply mx-4 transition-transform duration-300 ease-in-out;
+}
+
+.nav-item:hover {
+  @apply -translate-y-1;
+}
+
+.nav-item {
+  @apply text-white relative pb-1 transition-all duration-300 ease-in-out;
+}
+
+.nav-item::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 ease-in-out;
+}
+
+.nav-item:hover::after {
+  @apply w-full;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    scale: 30%;
+  }
+
+  to {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+
+body, html{
+  padding: 0;
+  margin: 0;
+  
+}
+
+div {
+  animation: scaleIn 0.8s ease-out;
+}
+.about-img, .about-desc{
+  transition: transform 0.3s ease;
+}
+.about-img:hover,.about-desc:hover {
+  transform: translateY(-5px);
+}
+
+.educacion{
+  animation: fadeInLeft 0.8s ease-out;
+  animation-timeline: view();
+  animation-range: entry 5% cover 30%;
+}
+
+.eventos{
+  animation: fadeInRight 0.8s ease-out;
+  animation-timeline: view();
+  animation-range: entry 5% cover 30%;
+}
+
+.areas{
+  animation: fadeInUp 0.8s ease-out;
+  animation-timeline: view();
+  animation-range: entry 5% cover 30%;
+}
+
