@@ -33,7 +33,7 @@ const Education = () => {
       imageUrl:
         "https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?auto=format&fit=crop&q=80",
       readMore:
-        "https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S1405-77432017000100031",
+        "https://illustrious-narwhal-04efc3.netlify.app/",
     },
   ];
 
