@@ -16,7 +16,7 @@ const Hero = () => {
             <img src="/logo2.png" className="w-full h-auto" alt="logo" />
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight text-green-600 sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-extrabold tracking-tight text-lime-400 text-opacity-80 sm:text-5xl md:text-6xl">
             Bienvenido a <span className="text-white">Green Places</span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-xl text-white">
@@ -26,7 +26,7 @@ const Hero = () => {
           <div className="mt-10 flex justify-center gap-4">
             <a
               href="#educacion"
-              className="px-8 py-3 border border-white text-base font-medium rounded-md text-white bg-green-800 hover:bg-lime-600 md:text-lg transition duration-500"
+              className="px-8 py-3 border border-white text-base font-medium rounded-md text-white bg-lime-700 hover:bg-green-800 md:text-lg transition duration-500"
             >
               Aprende con nosotros
             </a>
