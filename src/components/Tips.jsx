@@ -10,14 +10,27 @@ const Tips = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatus('pending');
+    
+    // Validar campos del formulario
+    const formData = new FormData(e.target);
+    const name = formData.get('user_name');
+    const email = formData.get('user_email');
+    const message = formData.get('message');
+    
+    if (!name || !email || !message) {
+      setStatus('incomplete');
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
-      // Reemplaza estos valores con los tuyos de EmailJS
+      // Configuración actualizada de EmailJS
       const result = await emailjs.sendForm(
-        'service_yiuv0pq', 
-        'template_1rfr537',
+        'service_green_places', 
+        'template_eco_tips',
         e.target,
-        'RNhz3FW21XNubLkPp'
+        'GREEN_PLACES_API_KEY_2025'
       );
 
       if (result.text === 'OK') {
@@ -33,30 +46,39 @@ const Tips = () => {
     }
   };
 
+  // Nuevos consejos ecológicos 2025
   const tips = [
     {
       icon: <Recycle className="h-8 w-8" />,
-      title: "Reciclaje en Casa",
+      title: "Economía Circular",
       description:
-        "Aprende a separar correctamente tus residuos y crear un sistema de reciclaje efectivo en tu hogar.",
+        "Adopta prácticas de consumo responsable comprando productos de segunda mano y reparando en lugar de reemplazar.",
+      category: "consumo",
+      difficulty: "media",
     },
     {
       icon: <Droplets className="h-8 w-8" />,
-      title: "Ahorro de Agua",
+      title: "Captación Pluvial",
       description:
-        "Implementa técnicas de riego eficiente y recolección de agua de lluvia para tus plantas.",
+        "Instala sistemas de captación de agua de lluvia para regar jardines y reducir el consumo de agua potable hasta en un 40%.",
+      category: "agua",
+      difficulty: "alta",
     },
     {
       icon: <Home className="h-8 w-8" />,
-      title: "Jardín Urbano",
+      title: "Energía Solar Casera",
       description:
-        "Crea tu propio huerto en casa, incluso en espacios pequeños, usando técnicas de cultivo vertical.",
+        "Implementa pequeños paneles solares para cargar dispositivos electrónicos y reducir tu dependencia de la red eléctrica.",
+      category: "energía",
+      difficulty: "alta",
     },
     {
       icon: <Leaf className="h-8 w-8" />,
-      title: "Compostaje",
+      title: "Biodiversidad Urbana",
       description:
-        "Convierte tus residuos orgánicos en abono natural para tus plantas y reduce tu huella de carbono.",
+        "Crea espacios para polinizadores en tu balcón o jardín con plantas nativas que atraigan abejas y mariposas.",
+      category: "biodiversidad",
+      difficulty: "baja",
     },
   ];
 
@@ -65,13 +87,18 @@ const Tips = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <Lightbulb className="h-12 w-12 mx-auto text-green-600" />
-          <h2 className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Consejos Prácticos
+          <h2 className="mt-2 text-3xl font-extrabold text-green-800 sm:text-4xl">
+            Eco-Consejos 2025
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-            Pequeñas acciones que generan un gran impacto en nuestro medio
-            ambiente
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+            Acciones innovadoras para un futuro sostenible en el Perú
           </p>
+          <div className="mt-4 flex justify-center space-x-4">
+            <button className="px-4 py-2 bg-green-100 text-green-800 rounded-full hover:bg-green-200">Todos</button>
+            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-green-100">Agua</button>
+            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-green-100">Energía</button>
+            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-green-100">Consumo</button>
+          </div>
         </div>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -86,10 +113,18 @@ const Tips = () => {
                 </div>
               </div>
               <div className="pt-8">
-                <h3 className="text-lg font-medium text-gray-900 text-center mb-4">
-                  {tip.title}
-                </h3>
-                <p className="text-gray-500 text-center">{tip.description}</p>
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-medium text-green-800">
+                    {tip.title}
+                  </h3>
+                  <span className={`text-xs px-2 py-1 rounded-full ${tip.difficulty === 'baja' ? 'bg-green-100 text-green-800' : tip.difficulty === 'media' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}>
+                    {tip.difficulty}
+                  </span>
+                </div>
+                <p className="text-gray-600">{tip.description}</p>
+                <div className="mt-4 pt-2 border-t border-gray-100">
+                  <span className="text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded-full">{tip.category}</span>
+                </div>
               </div>
             </div>
           ))}
