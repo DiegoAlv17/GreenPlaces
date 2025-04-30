@@ -1,12 +1,36 @@
-# React + Vite
+# GreenPlaces
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido a GreenPlaces! Esta es una aplicación web moderna y ecológica desarrollada con React y Vite.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interfaz moderna y responsive
+- Integración con Formspree para formularios
+- Animaciones y transiciones suaves
+- Diseño limpio y minimalista
+- Optimizado para SEO
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías Utilizadas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React 18
+- **Build Tool**: Vite
+- **CSS**: Tailwind CSS
+- **Formularios**: Formspree
+- **Iconos**: Lucide React
+- **Email**: EmailJS
+
+## 📦 Instalación
+
+1. Clona el repositorio:
+```bash
+git clone [URL_DEL_REPO]
+cd greenplaces-frontend
+
+2. Instala las dependencias:
+```bash
+npm install
+
+3. Ejecuta el servidor de desarrollo:
+```bash
+npm run dev
+

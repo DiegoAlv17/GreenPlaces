@@ -81,10 +81,12 @@ const Footer = () => {
 
                 <div className="mt-8 pt-8 border-t border-green-700">
                     <p className="text-center text-green-100">
-                        © {new Date().getFullYear()} Un Peru verde. Lorena Kim, Anghelina, Diego & Ana.
+                        © {new Date().getFullYear()} Un Peru verde. Lorena Kim, Renzo, Diego & Ana.
                     </p>
                 </div>
             </div>
         </footer>
     )
 }
+
+export default Footer;
