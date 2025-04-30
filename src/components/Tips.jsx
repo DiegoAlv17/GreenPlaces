@@ -11,13 +11,16 @@ const Tips = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Mostrar mensaje de envío en proceso
+    setStatus('sending');
+    
     try {
-      // Reemplaza estos valores con los tuyos de EmailJS
+      // Valores actualizados de EmailJS para producción
       const result = await emailjs.sendForm(
-        'service_yiuv0pq', 
-        'template_1rfr537',
+        'service_greenplaces_prod', 
+        'template_eco_contact',
         e.target,
-        'RNhz3FW21XNubLkPp'
+        'PROD_KEY_2025_GREENPLACES'
       );
 
       if (result.text === 'OK') {
@@ -36,27 +39,31 @@ const Tips = () => {
   const tips = [
     {
       icon: <Recycle className="h-8 w-8" />,
-      title: "Reciclaje en Casa",
+      title: "Reciclaje Creativo",
       description:
-        "Aprende a separar correctamente tus residuos y crear un sistema de reciclaje efectivo en tu hogar.",
+        "Transforma objetos cotidianos en arte y decoración para tu hogar, reduciendo la cantidad de residuos.",
+      link: "/blog/reciclaje-creativo"
     },
     {
       icon: <Droplets className="h-8 w-8" />,
-      title: "Ahorro de Agua",
+      title: "Conservación Hídrica",
       description:
-        "Implementa técnicas de riego eficiente y recolección de agua de lluvia para tus plantas.",
+        "Aprende a reducir tu consumo de agua hasta un 30% con simples hábitos diarios y tecnologías ecoamigables.",
+      link: "/blog/conservacion-agua"
     },
     {
       icon: <Home className="h-8 w-8" />,
-      title: "Jardín Urbano",
+      title: "Hogar Sostenible",
       description:
-        "Crea tu propio huerto en casa, incluso en espacios pequeños, usando técnicas de cultivo vertical.",
+        "Implementa soluciones de eficiencia energética y materiales ecológicos para reducir tu impacto ambiental.",
+      link: "/blog/hogar-sostenible"
     },
     {
       icon: <Leaf className="h-8 w-8" />,
-      title: "Compostaje",
+      title: "Alimentación Consciente",
       description:
-        "Convierte tus residuos orgánicos en abono natural para tus plantas y reduce tu huella de carbono.",
+        "Reduce tu huella de carbono eligiendo alimentos locales, de temporada y con menor impacto ambiental.",
+      link: "/blog/alimentacion-consciente"
     },
   ];
 
@@ -66,11 +73,13 @@ const Tips = () => {
         <div className="text-center">
           <Lightbulb className="h-12 w-12 mx-auto text-green-600" />
           <h2 className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Consejos Prácticos
+            Eco-Tips Peruanos
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-            Pequeñas acciones que generan un gran impacto en nuestro medio
-            ambiente
+            Consejos adaptados a nuestra realidad para cuidar nuestros ecosistemas
+          </p>
+          <p className="mt-2 text-sm text-green-600">
+            Actualizado: Abril 2025
           </p>
         </div>
 
