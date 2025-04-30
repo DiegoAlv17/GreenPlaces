@@ -2,39 +2,42 @@ import { Calendar, MapPin, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Events = () => {
+
+  const currentYear = new Date().getFullYear();
+
   const [volunteers, setVolunteers] = useState({
-    oxapampa: 50,
-    lima: 100,
-    miraflores: 30,
+    tarapoto: 50,
+    iquitos: 100,
+    arequipa: 30,
   });
 
   const events = [
     {
-      title: "Reforestación en Oxapampa",
-      date: "15 de Mayo, 2024",
-      location: "Oxapampa, Pasco",
-      participants: volunteers.oxapampa,
+      title: "Campaña de protección del colibrí",
+      date: `12 de marzo, ${currentYear}`,
+      location: "Tarapoto, San Martín",
+      participants: volunteers.tarapoto,
       imageUrl:
-        "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80",
-      id: "oxapampa",
+        "https://www.portalambiental.com.mx/sites/default/files/media/image/2020/12/colibri.unam__0.jpg",
+      id: "tarapoto",
     },
     {
-      title: "Limpieza de Playa Costa Verde",
-      date: "22 de Mayo, 2024",
-      location: "Lima",
-      participants: volunteers.lima,
+      title: "Festival de vida silvestre",
+      date: `27 de abril, ${currentYear}`,
+      location: "Iquitos, Loreto",
+      participants: volunteers.iquitos,
       imageUrl:
-        "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?auto=format&fit=crop&q=80",
-      id: "lima",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkPc7XudTaSySciMPEXPLbTNqud6n7XQ3r4Q&s",
+      id: "iquitos",
     },
     {
-      title: "Taller de Agricultura Urbana",
-      date: "1 de Junio, 2024",
-      location: "Miraflores, Lima",
-      participants: volunteers.miraflores,
+      title: "Jornada de compostaje comunitario",
+      date: `9 de septiembre, ${currentYear}`,
+      location: "Arequipa, Cayma",
+      participants: volunteers.arequipa,
       imageUrl:
-        "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&q=80",
-      id: "miraflores",
+        "https://cdn.www.gob.pe/uploads/document/file/5235173/abue%2001.jpeg.JPG",
+      id: "arequipa",
     },
   ];
 
