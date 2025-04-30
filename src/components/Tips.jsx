@@ -3,50 +3,11 @@ import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 const Tips = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [status, setStatus] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeFilter, setActiveFilter] = useState('todos');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [status, setStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setStatus('pending');
-    
-    // Validar campos del formulario
-    const formData = new FormData(e.target);
-    const name = formData.get('user_name');
-    const email = formData.get('user_email');
-    const message = formData.get('message');
-    
-    if (!name || !email || !message) {
-      setStatus('incomplete');
-      setIsSubmitting(false);
-      return;
-    }
-    
-    try {
-      // Configuración actualizada de EmailJS
-      const result = await emailjs.sendForm(
-        'service_green_places', 
-        'template_eco_tips',
-        e.target,
-        'GREEN_PLACES_API_KEY_2025'
-      );
-
-      if (result.text === 'OK') {
-        setStatus('success');
-        e.target.reset();
-      } else {
-        setStatus('error');
-      }
-    } catch (error) {
-      setStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // Nuevos consejos ecológicos 2025
   const tips = [
     {
       icon: <Recycle className="h-8 w-8" />,
@@ -82,6 +43,37 @@ const Tips = () => {
     },
   ];
 
+  const filteredTips = tips.filter(tip => {
+    if (activeFilter === 'todos') return true;
+    return tip.category.toLowerCase() === activeFilter.toLowerCase();
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Reemplaza estos valores con los tuyos de EmailJS
+      const result = await emailjs.sendForm(
+        'service_yiuv0pq', 
+        'template_1rfr537',
+        e.target,
+        'RNhz3FW21XNubLkPp'
+      );
+
+      if (result.text === 'OK') {
+        setStatus('success');
+        e.target.reset();
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="consejos" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,15 +86,22 @@ const Tips = () => {
             Acciones innovadoras para un futuro sostenible en el Perú
           </p>
           <div className="mt-4 flex justify-center space-x-4">
-            <button className="px-4 py-2 bg-green-100 text-green-800 rounded-full hover:bg-green-200">Todos</button>
-            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-green-100">Agua</button>
-            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-green-100">Energía</button>
-            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-green-100">Consumo</button>
+            {['todos', 'agua', 'energía', 'consumo', 'biodiversidad'].map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-4 py-2 rounded-full transition-colors duration-200 ${activeFilter === filter
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-gray-100 text-gray-800 hover:bg-green-50'}`}
+              >
+                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {tips.map((tip) => (
+          {filteredTips.map((tip) => (
             <div
               key={tip.title}
               className="relative p-6 bg-white rounded-lg border border-green-100 shadow-sm hover:shadow-md transition-shadow"
