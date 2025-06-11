@@ -1,4 +1,6 @@
 import { Sprout, Leaf } from "lucide-react";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../Redux/cartSlice';
 
 const products = [
   {
@@ -32,6 +34,7 @@ const products = [
 ];
 
 const Shop = () => {
+  const dispatch = useDispatch();
   return (
     <section id="shop" className="py-16 bg-amber-50">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -68,7 +71,7 @@ const Shop = () => {
                 <div className="mt-4 flex items-center justify-between">
                   <span className="text-lg font-bold text-green-800">S/ {product.price}</span>
                   <button className="bg-green-600 text-white px-4 py-1.5 rounded-md hover:bg-green-500 transition-colors text-sm" 
-                  >
+                  onClick={() => dispatch(addToCart(product))}>
                     Añadir
                   </button>
                 </div>

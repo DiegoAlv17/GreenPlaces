@@ -8,6 +8,7 @@ import Events from "./components/Events.jsx";
 import Areas from "./components/Areas.jsx";
 import Tips from "./components/Tips.jsx";
 import Shop from "./components/Shop.jsx";
+import Cart from "./components/Cart.jsx";
 
 
 export default function App() {
@@ -30,6 +31,9 @@ export default function App() {
         />
         <Route path="/shop" element={
           <Shop />
+        } />
+        <Route path="/cart" element={
+          <Cart />
         } />
       </Routes>
       <Footer />
