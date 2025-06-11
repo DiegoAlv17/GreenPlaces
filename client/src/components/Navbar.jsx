@@ -1,5 +1,6 @@
 import React from 'react';
-import { Leaf, Calendar, BookOpen, Map, Home, Lightbulb } from 'lucide-react';
+import { Leaf, Calendar, BookOpen, Map, Home, Lightbulb, Store} from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -11,6 +12,7 @@ const Navbar = () => {
         { title: 'Eventos', icon: <Calendar size={20} />, href: '#eventos' },
         { title: 'Áreas Verdes', icon: <Map size={20} />, href: '#areas' },
         { title: 'Consejos', icon: <Lightbulb size={20} />, href: '#consejos' },
+        { title: 'Shop', icon: <Store size={20} />, href: '/shop' },
     ];
 
 
@@ -30,14 +32,14 @@ const Navbar = () => {
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-4">
                             {menuItems.map((item) => (
-                                <a
+                                <Link
                                     key={item.title}
-                                    href={item.href}
+                                    to={item.href}
                                     className="nav-item text-green-100 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2"
                                 >
                                     {item.icon}
                                     {item.title}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </div>

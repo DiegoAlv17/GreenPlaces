@@ -1,4 +1,5 @@
-import NavBar from "./components/Navbar.jsx";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import Footer from "./components/Footer.jsx";
 import About from "./components/About.jsx";
@@ -6,20 +7,31 @@ import Education from "./components/Education.jsx";
 import Events from "./components/Events.jsx";
 import Areas from "./components/Areas.jsx";
 import Tips from "./components/Tips.jsx";
+import Shop from "./components/Shop.jsx";
 
 
 export default function App() {
   return (
     <div className="min-h-screen bg-white">
-      <NavBar />
-      <main>
-        <Hero />
-        <About />
-        <Education />
-        <Events />
-        <Areas />
-        <Tips />
-      </main>
+    <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main>
+              <Hero />
+              <About />
+              <Education />
+              <Events />
+              <Areas />
+              <Tips />
+            </main>
+          }
+        />
+        <Route path="/shop" element={
+          <Shop />
+        } />
+      </Routes>
       <Footer />
     </div>
   );
