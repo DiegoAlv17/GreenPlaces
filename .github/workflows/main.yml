@@ -26,9 +26,9 @@ jobs:
       run:
         working-directory: client
     # Estrategia para ejecutar el job en diferentes versiones de Node.js.    
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
+    #strategy:
+      #matrix:
+        #node-version: [18.x, 20.x, 22.x]
       
     # Lista de pasos a ejecutar en el job.
     steps:
@@ -39,7 +39,7 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
       # Paso 3: Instala las dependencias definidas en package-lock.json.
       - name: Instalar dependencias
