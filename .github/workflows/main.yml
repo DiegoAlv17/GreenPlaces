@@ -52,3 +52,10 @@ jobs:
       # Paso 5: Compila la aplicación para producción.
       - name: Compilar aplicación
         run: npm run build
+
+      # Paso 6: Guarda la aplicación construida
+      - name: Subir artefacto de build
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-dist
+          path: client/dist
