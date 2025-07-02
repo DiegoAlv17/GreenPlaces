@@ -57,7 +57,7 @@ const Education = () => {
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
             Recursos y materiales para aprender sobre conservación y
-            sostenibilidad
+            sostenibilidad de la mano de GreenPlaces
           </p>
         </div>
 
