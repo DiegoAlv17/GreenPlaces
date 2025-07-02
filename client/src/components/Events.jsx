@@ -61,7 +61,7 @@ const Events = () => {
             Próximos Eventos
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-            Únete a nuestras actividades de conservación y educación ambiental
+            Únete a nuestras actividades de conservación y educación ambiental. ¡No te lo pierdas!
           </p>
         </div>
 
