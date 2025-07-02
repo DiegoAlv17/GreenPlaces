@@ -37,7 +37,7 @@ const Tips = () => {
       icon: <Leaf className="h-8 w-8" />,
       title: "Biodiversidad Urbana",
       description:
-        "Crea espacios para polinizadores en tu balcón o jardín con plantas nativas que atraigan abejas y mariposas.",
+        "Crea espacios para polinizadores en tu balcón o jardín con plantas nativas que atraigan abejas y mariposas. Esto ayuda a conservar la biodiversidad local.",
       category: "biodiversidad",
       difficulty: "baja",
     },
