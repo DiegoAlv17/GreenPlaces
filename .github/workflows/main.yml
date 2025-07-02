@@ -1,0 +1,54 @@
+#Se establece el nombre del actio, en este caso es para realizar la integración continua del sistema por 
+#lado del cliente
+name: CI Client (React + Vite)
+
+#Aquí se indique sobre que va a trabajar este workflow
+on:
+  #Va trabajar cuando se haga un push o pull request a la rama main y cuando los cambios se hagan dentro de la carpeta client
+  push:
+    branches: [main]
+    paths:
+      - 'client/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'client/**'
+
+#Aquí se definin cuales van a ser las acciones de integración mediante el job
+jobs:
+  #Build del test es el nombre de la acción que se va a realizar
+  build-and-test:
+    #Aquí se detalla la maquina virtuale en donde se va a ejecutar esta integración
+    runs-on: ubuntu-latest
+
+    # Configura el directorio por defecto donde se ejecutarán los comandos run.
+    defaults:
+      run:
+        working-directory: client
+    # Estrategia para ejecutar el job en diferentes versiones de Node.js.    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+      
+    # Lista de pasos a ejecutar en el job.
+    steps:
+      # Paso 1: Descarga el código fuente del repositorio.
+      - name: Checkout código
+        uses: actions/checkout@v4
+      # Paso 2: Instala la versión de Node.js definida por la matriz.
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Paso 3: Instala las dependencias definidas en package-lock.json.
+      - name: Instalar dependencias
+        run: npm ci
+      
+      # Paso 4: Ejecuta los tests automáticos del proyecto.
+      #- name: Ejecutar pruebas
+        #run: npm test
+
+      # Paso 5: Compila la aplicación para producción.
+      - name: Compilar aplicación
+        run: npm run build
