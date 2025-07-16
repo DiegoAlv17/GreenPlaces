@@ -43,6 +43,18 @@ const Navbar = () => {
                   {item.title}
                 </Link>
               ))}
+              <Link
+                to="/login"
+                className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium ml-2"
+              >
+                Iniciar Sesión
+              </Link>
+              <Link
+                to="/register"
+                className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium ml-2"
+              >
+                Registrarse
+              </Link>
               {/* Carrito */}
               <button
                 onClick={() => setIsCartOpen(!isCartOpen)}
@@ -83,15 +95,30 @@ const Navbar = () => {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.title}
-                href={item.href}
-                className="nav-item text-green-100 hover:bg-green-600 block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2"
+                to={item.href}
+                className="nav-item text-green-100 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
               >
                 {item.icon}
                 {item.title}
-              </a>
+              </Link>
             ))}
+            <Link
+              to="/login"
+              className="block text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2"
+              onClick={() => setIsOpen(false)}
+            >
+              Iniciar Sesión
+            </Link>
+            <Link
+              to="/register"
+              className="block text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2"
+              onClick={() => setIsOpen(false)}
+            >
+              Registrarse
+            </Link>
           </div>
         </div>
       )}

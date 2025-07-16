@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model cliente {
+  cliente_id   Int      @id @default(autoincrement())
+  nombre       String    
+  apellido     String
+  email        String   @unique 
+  contraseña   String 
+  venta        venta[]
+  evento_asistente evento_asistente[] 
+}
+
+model evento_asistente {
+  evento_asistente_id Int @id @default(autoincrement())
+  cliente_id Int
+  evento_id Int 
+  cliente cliente @relation(fields: [cliente_id], references: [cliente_id])
+  evento evento @relation(fields: [evento_id], references: [evento_id])
+}
+
+model evento {
+  evento_id Int @id @default(autoincrement())
+  evento_nombre String
+  lugar String
+  fecha_evento DateTime
+  aforo Int
+  admin_id Int
+  evento_asistente evento_asistente[]
+  administrador administrador @relation(fields: [admin_id], references: [admin_id])
+}
+
+model administrador {
+  admin_id Int @id @default(autoincrement())
+  nombre String 
+  apellido String 
+  telefono String
+  dni String @unique
+  email String  @unique
+  contraseña String
+  evento evento[]
+  producto producto[]
+}
+
+model producto {
+  producto_id Int @id @default(autoincrement())
+  precio Float
+  descripcion String?
+  url_imagen String?
+  producto_nombre String
+  admin_id Int
+  administrador administrador @relation(fields: [admin_id], references: [admin_id])
+  venta_detalle venta_detalle[]
+}
+
+model venta_detalle {
+  venta_detalle_id Int @id @default(autoincrement())
+  cantidad Int
+  venta_id Int
+  producto_id Int 
+  venta venta @relation(fields:[venta_id], references:[venta_id])
+  producto producto @relation(fields:[producto_id], references:[producto_id])
+}
+
+model venta {
+  venta_id Int @id @default(autoincrement())
+  estado String
+  fecha_venta DateTime
+  fecha_envio DateTime
+  monto_total Float
+  cliente_id Int
+  cliente cliente @relation(fields:[cliente_id], references:[cliente_id])
+  venta_detalle venta_detalle[]
+}
