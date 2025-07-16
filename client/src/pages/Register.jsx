@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Register() {
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', password: '' });
+  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', contraseña: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica de registro
-    if (!form.nombre || !form.apellido || !form.email || !form.password) {
+    
+    if (!form.nombre || !form.apellido || !form.email || !form.contraseña) {
       setError('Completa todos los campos');
       return;
     }
-    setError('');
-    alert('Registro simulado');
+
+    try {
+      setError('');
+      setLoading(true);
+      await register(form);
+      navigate('/login');
+    } catch (error) {
+      setError(error.message || 'Error al registrarse');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,8 +83,8 @@ export default function Register() {
             <label className="block text-green-700 mb-1">Contraseña</label>
             <input
               type="password"
-              name="password"
-              value={form.password}
+              name="contraseña"
+              value={form.contraseña}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
               required
@@ -79,11 +93,12 @@ export default function Register() {
           <button
             type="submit"
             className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors font-semibold"
+            disabled={loading}
           >
-            Registrarse
+            {loading ? 'Registrando...' : 'Registrarse'}
           </button>
           <div className="mt-4 text-center">
-            <a href="/login" className="text-green-700 hover:underline text-sm">¿Ya tienes cuenta? Inicia sesión</a>
+            <Link to="/login" className="text-green-700 hover:underline text-sm">¿Ya tienes cuenta? Inicia sesión</Link>
           </div>
         </form>
       </div>

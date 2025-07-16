@@ -1,14 +1,19 @@
 import React from 'react';
-import { Leaf, Calendar, BookOpen, Map, Home, Lightbulb, Store,ShoppingCart} from 'lucide-react';
+import { Leaf, Calendar, BookOpen, Map, Home, Lightbulb, Store, ShoppingCart, User, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, clearCart } from '../Redux/cartSlice';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isCartOpen, setIsCartOpen] = React.useState(false);
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  
+  // Valores por defecto para evitar errores mientras se configura el contexto
+  const auth = useAuth() || { isAuthenticated: false, userRole: null };
+  const { isAuthenticated, userRole, logout } = auth;
 
   const menuItems = [
     { title: 'Inicio', icon: <Home size={20} />, href: '/' },
@@ -18,6 +23,109 @@ const Navbar = () => {
     { title: 'Consejos', icon: <Lightbulb size={20} />, href: '#consejos' },
     { title: 'Shop', icon: <Store size={20} />, href: '/shop' },
   ];
+
+  const handleLogout = async () => {
+    try {
+      if (logout) {
+        await logout();
+      } else {
+        console.log('Función logout no disponible');
+      }
+      // El redireccionamiento ya está manejado en el AuthContext
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
+  const renderAuthButtons = () => {
+    if (isAuthenticated) {
+      return (
+        <>
+          {userRole === 'administrador' && (
+            <Link
+              to="/admin"
+              className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 ml-2"
+            >
+              <User size={18} />
+              Admin
+            </Link>
+          )}
+          <button
+            onClick={handleLogout}
+            className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 ml-2"
+          >
+            <LogOut size={18} />
+            Cerrar Sesión
+          </button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link
+            to="/login"
+            className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium ml-2"
+          >
+            Iniciar Sesión
+          </Link>
+          <Link
+            to="/register"
+            className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium ml-2"
+          >
+            Registrarse
+          </Link>
+        </>
+      );
+    }
+  };
+
+  const renderMobileAuthButtons = () => {
+    if (isAuthenticated) {
+      return (
+        <>
+          {userRole === 'administrador' && (
+            <Link
+              to="/admin"
+              className="text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2 flex items-center gap-2"
+              onClick={() => setIsOpen(false)}
+            >
+              <User size={18} />
+              Admin
+            </Link>
+          )}
+          <button
+            onClick={() => {
+              handleLogout();
+              setIsOpen(false);
+            }}
+            className="w-full text-left text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2 flex items-center gap-2"
+          >
+            <LogOut size={18} />
+            Cerrar Sesión
+          </button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link
+            to="/login"
+            className="block text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2"
+            onClick={() => setIsOpen(false)}
+          >
+            Iniciar Sesión
+          </Link>
+          <Link
+            to="/register"
+            className="block text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2"
+            onClick={() => setIsOpen(false)}
+          >
+            Registrarse
+          </Link>
+        </>
+      );
+    }
+  };
 
   return (
     <nav className="bg-green-700 fixed w-full z-50 top-0">
@@ -43,18 +151,7 @@ const Navbar = () => {
                   {item.title}
                 </Link>
               ))}
-              <Link
-                to="/login"
-                className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium ml-2"
-              >
-                Iniciar Sesión
-              </Link>
-              <Link
-                to="/register"
-                className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium ml-2"
-              >
-                Registrarse
-              </Link>
+              {renderAuthButtons()}
               {/* Carrito */}
               <button
                 onClick={() => setIsCartOpen(!isCartOpen)}
@@ -105,67 +202,54 @@ const Navbar = () => {
                 {item.title}
               </Link>
             ))}
-            <Link
-              to="/login"
-              className="block text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Iniciar Sesión
-            </Link>
-            <Link
-              to="/register"
-              className="block text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Registrarse
-            </Link>
+            {renderMobileAuthButtons()}
           </div>
         </div>
       )}
-     {isCartOpen && (
-      <div className="fixed top-20 right-4 bg-white shadow-lg rounded-lg p-4 z-50 w-80">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="font-bold text-lg">Carrito</h3>
-          {cart.length > 0 && (
-            <button
-              onClick={() => dispatch(clearCart())}
-              className="text-xs text-red-600 hover:underline"
-            >
-              Vaciar carrito
-            </button>
+      {isCartOpen && (
+        <div className="fixed top-20 right-4 bg-white shadow-lg rounded-lg p-4 z-50 w-80">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="font-bold text-lg">Carrito</h3>
+            {cart.length > 0 && (
+              <button
+                onClick={() => dispatch(clearCart())}
+                className="text-xs text-red-600 hover:underline"
+              >
+                Vaciar carrito
+              </button>
+            )}
+          </div>
+          {cart.length === 0 ? (
+            <p className="text-gray-500">No hay productos en el carrito.</p>
+          ) : (
+            <ul>
+              {cart.map((item) => (
+                <li key={item.id} className="flex items-center gap-2 border-b py-2">
+                  <img src={item.imageUrl} alt={item.name} className="w-10 h-10 rounded" />
+                  <div className="flex-1">
+                    <p className="font-medium">{item.name}</p>
+                    <p className="text-sm text-green-700">S/ {item.price}</p>
+                  </div>
+                  <button
+                    onClick={() => dispatch(removeFromCart(item.id))}
+                    className="text-red-500 hover:text-red-700 text-xs"
+                    title="Eliminar"
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
           )}
+          <Link
+            to="/cart"
+            className="bg-green-600 text-white mt-4 px-4 py-1.5 rounded-md hover:bg-green-500 transition-colors text-sm flex justify-center items-center"
+            onClick={() => setIsCartOpen(false)}
+          >
+            Ir a Carrito
+          </Link>
         </div>
-        {cart.length === 0 ? (
-          <p className="text-gray-500">No hay productos en el carrito.</p>
-        ) : (
-          <ul>
-            {cart.map((item) => (
-              <li key={item.id} className="flex items-center gap-2 border-b py-2">
-                <img src={item.imageUrl} alt={item.name} className="w-10 h-10 rounded" />
-                <div className="flex-1">
-                  <p className="font-medium">{item.name}</p>
-                  <p className="text-sm text-green-700">S/ {item.price}</p>
-                </div>
-                <button
-                  onClick={() => dispatch(removeFromCart(item.id))}
-                  className="text-red-500 hover:text-red-700 text-xs"
-                  title="Eliminar"
-                >
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-       <Link
-        to="/cart"
-        className="bg-green-600 text-white mt-4 px-4 py-1.5 rounded-md hover:bg-green-500 transition-colors text-sm flex justify-center items-center"
-        onClick={() => setIsCartOpen(false)}
-      >
-        Ir a Carrito
-      </Link>
-      </div>
-    )}
+      )}
     </nav>
   );
 };

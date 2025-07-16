@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: '', contraseña: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica de autenticación
-    if (!form.email || !form.password) {
+    
+    if (!form.email || !form.contraseña) {
       setError('Completa todos los campos');
       return;
     }
-    setError('');
-    alert('Inicio de sesión simulado');
+
+    try {
+      setError('');
+      setLoading(true);
+      await login(form);
+      // El redireccionamiento se maneja en el AuthContext según el rol
+    } catch (error) {
+      setError(error.message || 'Error al iniciar sesión');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,8 +60,8 @@ export default function Login() {
             <label className="block text-green-700 mb-1">Contraseña</label>
             <input
               type="password"
-              name="password"
-              value={form.password}
+              name="contraseña"
+              value={form.contraseña}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
               required
@@ -57,11 +70,12 @@ export default function Login() {
           <button
             type="submit"
             className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors font-semibold"
+            disabled={loading}
           >
-            Iniciar Sesión
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>
           <div className="mt-4 text-center">
-            <a href="/register" className="text-green-700 hover:underline text-sm">¿No tienes cuenta? Regístrate</a>
+            <Link to="/register" className="text-green-700 hover:underline text-sm">¿No tienes cuenta? Regístrate</Link>
           </div>
         </form>
       </div>
