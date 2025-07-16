@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Package, Calendar, ShoppingCart, LogOut, Leaf } from 'lucide-react';
+import { Package, Calendar, ShoppingCart, LogOut, Leaf, Users } from 'lucide-react';
 import Productos from './Productos/Productos';
 import Eventos from './Eventos/Eventos';
 import Ventas from './Ventas/Ventas';
+import Administradores from './Administradores/Administradores';
 import { useAuth } from '../../context/AuthContext';
 
 const Admin = () => {
@@ -17,6 +18,8 @@ const Admin = () => {
         return <Eventos />;
       case 'ventas':
         return <Ventas />;
+      case 'administradores':
+        return <Administradores />;
       default:
         return <Productos />;
     }
@@ -60,6 +63,13 @@ const Admin = () => {
           >
             <ShoppingCart size={18} />
             Ventas
+          </button>
+          <button 
+            onClick={() => setActiveTab('administradores')}
+            className={`flex items-center gap-2 w-full text-left px-3 py-2 rounded-md ${activeTab === 'administradores' ? 'bg-green-600' : 'hover:bg-green-600'}`}
+          >
+            <Users size={18} />
+            Administradores
           </button>
         </nav>
         <button 

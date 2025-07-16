@@ -21,28 +21,58 @@ export const AuthProvider = ({ children }) => {
   // Verificar si hay un usuario autenticado al cargar la app
   useEffect(() => {
     const checkAuthStatus = async () => {
+      console.log('AuthContext - Starting auth check...');
       try {
+        // Primero verificar si hay datos en localStorage
+        const savedUser = localStorage.getItem('currentUser');
+        const savedRole = localStorage.getItem('userRole');
+        
+        console.log('AuthContext - localStorage data:', { savedUser: !!savedUser, savedRole });
+        
+        if (savedUser && savedRole) {
+          const parsedUser = JSON.parse(savedUser);
+          setCurrentUser(parsedUser);
+          setUserRole(savedRole);
+          setIsAuthenticated(true);
+          console.log('AuthContext - Usuario cargado desde localStorage:', { parsedUser, savedRole });
+          setLoading(false);
+          return;
+        }
+
+        // Si no hay datos en localStorage, intentar verificar con el backend
+        console.log('AuthContext - No localStorage data, checking with backend...');
         const userData = await authService.getCurrentUser();
         if (userData) {
           setCurrentUser(userData.user);
           setUserRole(userData.role);
           setIsAuthenticated(true);
+          
+          // Guardar en localStorage
+          localStorage.setItem('currentUser', JSON.stringify(userData.user));
+          localStorage.setItem('userRole', userData.role);
+          
+          console.log('AuthContext - Usuario autenticado encontrado:', userData);
+        } else {
+          console.log('AuthContext - No hay usuario autenticado');
+          setCurrentUser(null);
+          setUserRole(null);
+          setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error("Error al verificar autenticación:", error);
+        console.log("AuthContext - No hay sesión activa:", error.message);
+        // Limpiar localStorage si hay error
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        setCurrentUser(null);
+        setUserRole(null);
+        setIsAuthenticated(false);
       } finally {
+        console.log('AuthContext - Setting loading to false');
         setLoading(false);
       }
     };
 
-    // Ejecutamos la verificación y aseguramos que loading se actualice
-    checkAuthStatus().finally(() => {
-      // Garantizamos que loading se ponga en false después de un breve tiempo
-      // en caso de que algo salga mal con la verificación
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    });
+    checkAuthStatus();
   }, []);
 
   // Función para iniciar sesión
@@ -52,6 +82,10 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(result.user);
       setUserRole(result.role);
       setIsAuthenticated(true);
+      
+      // Guardar en localStorage
+      localStorage.setItem('currentUser', JSON.stringify(result.user));
+      localStorage.setItem('userRole', result.role);
       
       // Redirigir según el rol
       if (result.role === 'administrador') {
@@ -83,9 +117,21 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(null);
       setUserRole(null);
       setIsAuthenticated(false);
+      
+      // Limpiar localStorage
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userRole');
+      
       navigate('/');
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
+      // Limpiar estado local aunque falle la llamada al servidor
+      setCurrentUser(null);
+      setUserRole(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userRole');
+      navigate('/');
     }
   };
 

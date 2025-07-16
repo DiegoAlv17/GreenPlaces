@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, Calendar, BookOpen, Map, Home, Lightbulb, Store, ShoppingCart, User, LogOut } from 'lucide-react';
+import { Leaf, Calendar, BookOpen, Map, Home, Lightbulb, Store, ShoppingCart, User, LogOut, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, clearCart } from '../Redux/cartSlice';
@@ -41,6 +41,22 @@ const Navbar = () => {
     if (isAuthenticated) {
       return (
         <>
+          <Link
+            to="/order-history"
+            className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 ml-2"
+          >
+            <Package size={18} />
+            Mis Pedidos
+          </Link>
+          {userRole === 'cliente' && (
+            <Link
+              to="/my-events"
+              className="nav-item text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 ml-2"
+            >
+              <Calendar size={18} />
+              Mis Eventos
+            </Link>
+          )}
           {userRole === 'administrador' && (
             <Link
               to="/admin"
@@ -83,6 +99,24 @@ const Navbar = () => {
     if (isAuthenticated) {
       return (
         <>
+          <Link
+            to="/order-history"
+            className="text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2 flex items-center gap-2"
+            onClick={() => setIsOpen(false)}
+          >
+            <Package size={18} />
+            Mis Pedidos
+          </Link>
+          {userRole === 'cliente' && (
+            <Link
+              to="/my-events"
+              className="text-green-100 border border-green-200 hover:bg-green-600 px-3 py-2 rounded-md text-base font-medium mt-2 flex items-center gap-2"
+              onClick={() => setIsOpen(false)}
+            >
+              <Calendar size={18} />
+              Mis Eventos
+            </Link>
+          )}
           {userRole === 'administrador' && (
             <Link
               to="/admin"

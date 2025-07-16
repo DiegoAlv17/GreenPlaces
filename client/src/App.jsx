@@ -10,14 +10,13 @@ import Events from "./components/Events.jsx";
 import Areas from "./components/Areas.jsx";
 import Tips from "./components/Tips.jsx";
 
-
 import Shop from "./pages/Shop.jsx";
 import Cart from "./pages/Cart.jsx";
+import OrderHistory from "./pages/OrderHistory.jsx";
+import MyEvents from "./pages/MyEvents.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Admin from './admin/pages/Admin';
-
-
 
 export default function App() {
   const location = useLocation();
@@ -45,6 +44,16 @@ export default function App() {
             <Shop />
           } />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/order-history" element={
+            <ProtectedRoute>
+              <OrderHistory />
+            </ProtectedRoute>
+          } />
+          <Route path="/my-events" element={
+            <ProtectedRoute requireRole="cliente">
+              <MyEvents />
+            </ProtectedRoute>
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={

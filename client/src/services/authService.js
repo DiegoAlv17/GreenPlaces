@@ -44,11 +44,28 @@ const authService = {
   // Método para verificar si hay una sesión activa
   getCurrentUser: async () => {
     try {
-      // Esta ruta debe ser implementada en tu backend
+      // Intentar obtener el usuario actual del backend
       const response = await axios.get(`${API_URL}/me`);
       return response.data;
     } catch (error) {
-      console.log('No hay usuario autenticado o el endpoint /me no está disponible');
+      if (error.response?.status === 404) {
+        console.log('Endpoint /me no disponible, verificando con una llamada simple...');
+        
+        // Si el endpoint /me no existe, intentar otra verificación
+        try {
+          // Hacer una llamada a algún endpoint protegido para verificar el token
+          const testResponse = await axios.get('http://localhost:3000/api/productos');
+          // Si la llamada es exitosa, significa que tenemos un token válido
+          // Pero no podemos obtener los datos del usuario sin el endpoint /me
+          console.log('Token válido pero sin endpoint /me - necesitarás implementar el endpoint en el backend');
+          return null;
+        } catch (testError) {
+          console.log('No hay sesión activa');
+          return null;
+        }
+      }
+      
+      console.log('No hay usuario autenticado:', error.response?.status);
       return null;
     }
   }
