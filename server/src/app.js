@@ -6,6 +6,8 @@ import clienteRoutes from './routes/cliente.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import productoRoutes from './routes/producto.routes.js';
+import eventoRoutes from './routes/evento.routes.js';
+import ventaRoutes from './routes/venta.routes.js';
 
 const app = express();
 
@@ -29,6 +31,12 @@ app.use('/api', adminRoutes);
 
 // Routes productos
 app.use('/api', productoRoutes);
+
+// Routes eventos
+app.use('/api', eventoRoutes);
+
+// Routes ventas
+app.use('/api', ventaRoutes);
 
 
 // Error handling middleware

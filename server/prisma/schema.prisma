@@ -37,6 +37,7 @@ model evento {
   lugar String
   fecha_evento DateTime
   aforo Int
+  url_imagen String
   admin_id Int
   evento_asistente evento_asistente[]
   administrador administrador @relation(fields: [admin_id], references: [admin_id])

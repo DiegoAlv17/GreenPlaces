@@ -1,0 +1,16 @@
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      # Bind mount de tu directorio local de prisma
+      - ./prisma:/app/prisma
+    environment:
+      - NODE_ENV=production
+      # Asegúrate de que DATABASE_URL apunte al archivo dentro del contenedor
+      - DATABASE_URL=file:/app/prisma/dev.db
+
+volumes:
+  sqlite-data:
