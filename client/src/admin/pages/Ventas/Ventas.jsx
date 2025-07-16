@@ -33,7 +33,7 @@ const Ventas = () => {
       
       // Test: Intentar obtener productos primero (para verificar que el token funciona)
       try {
-        const testResponse = await fetch('http://localhost:3000/api/productos', {
+        const testResponse = await fetch('http://20.197.241.231:3000/api/productos', {
           credentials: 'include'
         });
         console.log('Test productos endpoint status:', testResponse.status);

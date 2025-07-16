@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/auth';
+const API_URL = 'http://20.197.241.231:3000/api/auth';
 
 // Configuramos axios para que envíe cookies en las peticiones
 axios.defaults.withCredentials = true;

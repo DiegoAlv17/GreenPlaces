@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://20.197.241.231:3000/api';
 
 // Configurar axios para enviar cookies automáticamente
 axios.defaults.withCredentials = true;
