@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import clienteRoutes from './routes/cliente.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import adminRoutes from './routes/admin.routes.js';
+import productoRoutes from './routes/producto.routes.js';
 
 const app = express();
 
@@ -25,6 +26,9 @@ app.use('/api', clienteRoutes);
 
 //router admin
 app.use('/api', adminRoutes);
+
+// Routes productos
+app.use('/api', productoRoutes);
 
 
 // Error handling middleware

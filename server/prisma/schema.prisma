@@ -68,6 +68,7 @@ model producto {
 model venta_detalle {
   venta_detalle_id Int @id @default(autoincrement())
   cantidad Int
+  sub_total Float
   venta_id Int
   producto_id Int 
   venta venta @relation(fields:[venta_id], references:[venta_id])
